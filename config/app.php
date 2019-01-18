@@ -136,6 +136,7 @@ return [
 
     'providers' => [
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
+        Laracasts\Flash\FlashServiceProvider::class,
         /*
          * Laravel Framework Service Providers...
          */
