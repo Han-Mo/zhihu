@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\User;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
+use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Validator;
+use Naux\Mail\SendCloudTemplate;
 
 class RegisterController extends Controller
 {
@@ -43,7 +45,7 @@ class RegisterController extends Controller
     /**
      * Get a validator for an incoming registration request.
      *
-     * @param  array  $data
+     * @param  array $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
     protected function validator(array $data)
@@ -58,15 +60,34 @@ class RegisterController extends Controller
     /**
      * Create a new user instance after a valid registration.
      *
-     * @param  array  $data
+     * @param  array $data
      * @return \App\User
      */
     protected function create(array $data)
     {
-        return User::create([
+        $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
+            'avatar' => '/images/avatars/default.png',
+            'confirmation_token' => str_random(40),
             'password' => Hash::make($data['password']),
         ]);
+        $this->sendVerifyEmailTo($user);
+        return $user;
+    }
+
+    protected function sendVerifyEmailTo($user)
+    {
+        $data = [
+            'url' => route('email.verify',['token' => $user->confirmation_token]),
+            'name' => $user->name
+        ];
+        $template = new SendCloudTemplate('zhihu_register', $data);
+
+        Mail::raw($template, function ($message) use ($user) {
+            $message->from('18374950130@163.com', 'Han');
+
+            $message->to($user->email);//->cc('18374950130@163.com')
+        });
     }
 }
