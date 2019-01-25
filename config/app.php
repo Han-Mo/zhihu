@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => '知乎',//env('APP_NAME', '知乎'),
 
     /*
     |--------------------------------------------------------------------------
@@ -52,7 +52,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://localhost'),
+    'url' => env('APP_URL', 'http://zhihu'),
 
     'asset_url' => env('ASSET_URL', null),
 
@@ -137,6 +137,7 @@ return [
     'providers' => [
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
         Laracasts\Flash\FlashServiceProvider::class,
+        Overtrue\LaravelUEditor\UEditorServiceProvider::class,
         /*
          * Laravel Framework Service Providers...
          */
