@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Mail;
@@ -41,5 +42,9 @@ class User extends Authenticatable
 
             $message->to($this->email);//->cc('18374950130@163.com')
         });
+    }
+
+    public function owns(Model $model){
+        return $this->id == $model->user_id;
     }
 }

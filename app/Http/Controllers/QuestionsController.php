@@ -2,12 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Question;
+use App\Http\Requests\StoreQuestionRequest;
+use App\Repositoris\QuestionRepository;
 use Auth;
 use Illuminate\Http\Request;
 
 class QuestionsController extends Controller
 {
+    protected $questionRepository;
+    public function __construct(QuestionRepository $questionRepository)
+    {
+        $this->middleware('auth')->except(['index','show']);
+        $this->questionRepository = $questionRepository;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -36,15 +44,32 @@ class QuestionsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreQuestionRequest $request)
     {
         //
+        /*$rules = [
+            'title' => 'required|min:6|max:196',
+            'body' => 'required|min:26'
+        ];
+        $message = [
+            'title.required' => '标题不能为空',
+            'title.min' => '标题不能少于6个字符',
+            'body.required' => '内容不能为空',
+            'body.min' => '内容不能少于26个字符',
+        ];
+        $this->validate($request,$rules,$message);*/
+
+        $topics = $this->questionRepository->normalizeTopic($request->get('topics'));
+
         $data = [
           'title' => $request->get('title'),
           'body' => $request->get('body'),
           'user_id' => Auth::id()
         ];
-        $question = Question::create($data);
+        $question = $this->questionRepository->create($data);;
+
+        $question->topics()->attach($topics);
+
         return redirect()->route('question.show',[$question->id]);
     }
 
@@ -57,7 +82,7 @@ class QuestionsController extends Controller
     public function show($id)
     {
         //
-        $question = Question::find($id);
+        $question = $this->questionRepository->byIdWithTopics($id);
         return view('questions.show',compact('question'));
     }
 
@@ -69,6 +94,11 @@ class QuestionsController extends Controller
      */
     public function edit($id)
     {
+        $question = $this->questionRepository->byId($id);
+        if(Auth::user()->owns($question)){
+            return view('questions.edit',compact('question'));
+        }
+        return back();
         //
     }
 
@@ -79,9 +109,19 @@ class QuestionsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(StoreQuestionRequest $request, $id)
     {
-        //
+        $question = $this->questionRepository->byId($id);
+        $question->update([
+            'title' => $request->get('title'),
+            'body' => $request->get('body'),
+        ]);
+
+        $topics = $this->questionRepository->normalizeTopic($request->get('topics'));
+        $question->topics()->sync($topics);
+
+        return redirect()->route('question.show',[$question->id]);
+
     }
 
     /**

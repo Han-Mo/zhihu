@@ -10,17 +10,23 @@
     <title>{{ config('app.name', '知乎') }}</title>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+  {{--  <script src="{{ asset('js/app.js') }}" defer></script>--}}
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
-    {{--<script src="//code.jquery.com/jquery.js"></script>--}}
+    {{--<link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">--}}
+
     <!-- Styles -->
+
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    {{--<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">--}}
+    <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+    <script src="{{ asset('js/jquery-3.2.1.min.js') }}"></script>
+    <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('js/select2.min.js') }}"></script>
+    <link rel="stylesheet" href="{{ asset('css/select2.min.css') }}">
 </head>
 <body>
+
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
             <div class="container">
@@ -39,6 +45,7 @@
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
+
                         @guest
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
@@ -78,8 +85,27 @@
             @yield('content')
         </main>
     </div>
+
+    @yield('js')
+
     <script>
-        $('#flash-overlay-modal').modal();
+
+        $(document).ready(function() {
+
+            $('#flash-overlay-modal').modal();
+        });
+
     </script>
+
+    <style>
+        .invalid-feedback {
+            display: block;
+            width: 100%;
+            margin-top: .25rem;
+            font-size: 80%;
+            color: #e3342f;
+        }
+    </style>
+
 </body>
 </html>
