@@ -30,6 +30,10 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    public function answers(){
+        return $this->hasMany(Answer::class);
+    }
+
     public function sendPasswordResetNotification($token){
         $data = [
             'url' => url(config('app.url').route('password.reset', $token, false)),
