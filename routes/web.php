@@ -25,5 +25,5 @@ Route::resource('questions','QuestionsController',['names' => [
     'edit' => 'question.edit',
     'update' => 'question.update'
 ]]);
-
+Route::post('questions/{question}/answer','AnswersController@store')->name('answer');
 //Route::get('/email/verify/{token}',['as'=>'email.verify','user'=>'EmailController@verify']);
