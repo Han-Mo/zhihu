@@ -34,6 +34,18 @@ class User extends Authenticatable
         return $this->hasMany(Answer::class);
     }
 
+    public function follows(){
+        return $this->belongsToMany(Question::class,'user_question')->withTimestamps();
+    }
+
+    public function followThis($question){
+        return $this->follows()->toggle($question);
+    }
+
+    public function followed($question){
+        return !! $this->follows()->where('question_id',$question)->count();
+    }
+
     public function sendPasswordResetNotification($token){
         $data = [
             'url' => url(config('app.url').route('password.reset', $token, false)),

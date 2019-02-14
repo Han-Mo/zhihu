@@ -10,7 +10,6 @@
     <title>{{ config('app.name', '知乎') }}</title>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -18,15 +17,18 @@
 
     <!-- Styles -->
 
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ mix('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
-    <script src="{{ asset('js/jquery-3.2.1.min.js') }}"></script>
-    <script src="{{ asset('js/bootstrap.min.js') }}"></script>
-    <script src="{{ asset('js/select2.min.js') }}"></script>
-    <link rel="stylesheet" href="{{ asset('css/select2.min.css') }}">
+    <script type="text/javascript" src="{{ asset('vendor/ueditor/ueditor.config.js') }}"></script>
+    <!-- 编辑器源码文件 -->
+    <script type="text/javascript" src="{{ asset('vendor/ueditor/ueditor.all.js') }}"></script>
+    <script>
+        window.UEDITOR_CONFIG.serverUrl = '{{ config('ueditor.route.name') }}'
+    </script>
+    {{--<script src="{{ asset('js/bootstrap.min.js') }}"></script>--}}
+
 </head>
 <body>
-
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
             <div class="container">
@@ -85,7 +87,7 @@
             @yield('content')
         </main>
     </div>
-
+    <script src="{{mix('js/app.js')}}"></script>
     @yield('js')
 
     <script>
