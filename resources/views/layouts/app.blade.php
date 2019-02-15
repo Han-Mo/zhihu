@@ -6,6 +6,13 @@
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <!-- Api Token -->
+    @if(Auth::check())
+
+        <meta name="api-token" content="Bearer {{Auth::user()->api_token}}">
+
+    @endif
+
 
     <title>{{ config('app.name', '知乎') }}</title>
 

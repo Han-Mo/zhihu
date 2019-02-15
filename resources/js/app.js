@@ -23,6 +23,7 @@ window.Vue = require('vue');
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('question-follow-button', require('./components/QuestionFollowButton.vue').default);
+Vue.component('user-follow-button', require('./components/UserFollowButton.vue').default);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

@@ -11,10 +11,10 @@
 
 <script>
     export default {
-        props:['question'],
+        props:['user'],
         mounted() {
-           axios.post('/api/question/follower',{'question':this.question}).then(response => {
-               this.followed = response.data.followed
+            axios.get('/api/user/followers/'+this.user).then(response => {
+                this.followed = response.data.followed
             })
         },
         data(){
@@ -24,12 +24,12 @@
         },
         computed: {
             text() {
-                return this.followed ? '已关注' : '关注该问题'
+                return this.followed ? '已关注' : '关注他'
             }
         },
         methods:{
             follow(){
-                axios.post('/api/question/follow',{'question':this.question,}).then(response => {
+                axios.post('/api/user/follow',{'user':this.user,}).then(response => {
                     this.followed = response.data.followed
                 })
             }
