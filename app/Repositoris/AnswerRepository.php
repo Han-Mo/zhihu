@@ -13,8 +13,20 @@ use App\Answer;
 
 class AnswerRepository
 {
-    public function create(array $attrbutes){
+    public function create(array $attrbutes)
+    {
         $question = Answer::create($attrbutes);
         return $question;
+    }
+
+    public function byId($id)
+    {
+        return Answer::find($id);
+    }
+
+    public function getAnswerCommentsById($id)
+    {
+        $answer = Answer::with('comments','comments.user')->where('id',$id)->first();
+        return $answer->comments;
     }
 }

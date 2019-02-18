@@ -43,8 +43,26 @@ class User extends Authenticatable
         return $this->follows()->toggle($question);
     }
 
+    public function votes(){
+        return $this->belongsToMany(Answer::class,'votes')->withTimestamps();
+    }
+
+    public function voteFor($answer){
+        return $this->votes()->toggle($answer);
+    }
+
     public function followed($question){
         return !! $this->follows()->where('question_id',$question)->count();
+    }
+
+    public function haVoteFor($answer)
+    {
+        return !! $this->votes()->where('answer_id',$answer)->count();
+    }
+
+    public function messages()
+    {
+        return $this->hasMany(Message::class,'to_user_id');
     }
 
     public function followers()
