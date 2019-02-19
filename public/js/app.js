@@ -1821,14 +1821,15 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       body: '',
-      comments: [],
-      newComment: {
-        user: {
-          name: Zhihu.name,
-          avatar: Zhihu.avatar
-        },
-        body: ''
-      }
+      comments: []
+      /*newComment:{
+          user:{
+              name:Zhihu.name,
+              avatar:Zhihu.avatar
+          },
+          body:''
+      }*/
+
     };
   },
   computed: {
@@ -1851,9 +1852,16 @@ __webpack_require__.r(__webpack_exports__);
         'model': this.model,
         'body': this.body
       }).then(function (response) {
-        _this.newComment.body = response.data.body;
+        /*this.newComment.body = response.data.body;*/
+        var comment = {
+          user: {
+            name: Zhihu.name,
+            avatar: Zhihu.avatar
+          },
+          body: response.data.body
+        };
 
-        _this.comments.push(_this.newComment);
+        _this.comments.push(comment);
 
         _this.body = '';
         _this.count++;

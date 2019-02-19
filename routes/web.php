@@ -32,3 +32,9 @@ Route::get('questions/{question}/follow','QuestionFollowController@follow')->nam
 //Route::post('questions/{question}/answer','AnswersController@store')->name('answer');
 
 Route::get('notifications','NotificationsController@index')->name('notifications');
+
+Route::get('inbox','InboxController@index')->name('inbox');
+
+Route::get('inbox/{dialogId}','InboxController@show')->name('inbox-show');
+
+Route::post('inbox/{dialogId}/store','InboxController@store')->name('inbox-store');

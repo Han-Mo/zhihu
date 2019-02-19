@@ -59,13 +59,13 @@
             return {
                 body:'',
                 comments:[],
-                newComment:{
+                /*newComment:{
                     user:{
                         name:Zhihu.name,
                         avatar:Zhihu.avatar
                     },
                     body:''
-                }
+                }*/
             }
         },
         computed:{
@@ -82,8 +82,16 @@
         methods:{
             store(){
                 axios.post('/api/comment',{'type':this.type,'model':this.model,'body':this.body}).then(response => {
-                    this.newComment.body = response.data.body;
-                    this.comments.push(this.newComment);
+                    /*this.newComment.body = response.data.body;*/
+
+                    let comment = {
+                        user:{
+                            name:Zhihu.name,
+                            avatar:Zhihu.avatar
+                        },
+                        body:response.data.body
+                    };
+                    this.comments.push(comment);
                     this.body = '';
                     this.count++
                 })

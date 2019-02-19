@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreQuestionRequest;
 use App\Repositoris\QuestionRepository;
+use App\Topic;
 use Auth;
 use Illuminate\Http\Request;
 
@@ -145,4 +146,6 @@ class QuestionsController extends Controller
 
         abort(403,'Forbidden');
     }
+
+
 }
