@@ -27,6 +27,7 @@ Vue.component('user-follow-button', require('./components/UserFollowButton.vue')
 Vue.component('user-vote-button', require('./components/UserVoteButton.vue').default);
 Vue.component('send-message', require('./components/sendMessage.vue').default);
 Vue.component('comments', require('./components/Comments.vue').default);
+Vue.component('user-avatar', require('./components/avatar.vue').default);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

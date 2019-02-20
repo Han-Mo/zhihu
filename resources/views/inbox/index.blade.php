@@ -9,7 +9,7 @@
 
                     <div class="card-body">
                         @foreach($message as $messageGrop)
-                            <div class="media  {{$messageGrop->first()->shouldAddUnreadClass() ? 'list-group-item-warning': ''}}">
+                            <div class="media {{$messageGrop->first()->shouldAddUnreadClass() ? 'unread': ''}}">
                                 @if(Auth::id() == $messageGrop->last()->from_user_id)
                                     <img width="44" src="{{$messageGrop->last()->toUser->avatar}}" class="mr-3" alt="">
                                 @else

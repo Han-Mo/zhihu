@@ -31,10 +31,18 @@ Route::get('questions/{question}/follow','QuestionFollowController@follow')->nam
 //Route::get('/email/verify/{token}',['as'=>'email.verify','user'=>'EmailController@verify']);
 //Route::post('questions/{question}/answer','AnswersController@store')->name('answer');
 
-Route::get('notifications','NotificationsController@index')->name('notifications');
+Route::get('notifications','NotificationsController@index')->name('notifications-index');
+Route::get('notifications/{notification}','NotificationsController@show')->name('notifications-show');
+
+Route::get('avatar','UsersController@avatar')->name('avatar');
+Route::post('avatar','UsersController@changeAvatar')->name('changeAvatar');
+
+Route::get('password','PasswordController@password')->name('avatar');
+Route::post('password/update','PasswordController@update')->name('password-update');
+
+Route::get('setting','SettingController@index')->name('setting');
+Route::post('password/update','SettingController@store')->name('setting-store');
 
 Route::get('inbox','InboxController@index')->name('inbox');
-
 Route::get('inbox/{dialogId}','InboxController@show')->name('inbox-show');
-
 Route::post('inbox/{dialogId}/store','InboxController@store')->name('inbox-store');

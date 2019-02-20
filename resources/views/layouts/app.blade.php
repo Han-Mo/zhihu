@@ -37,6 +37,11 @@
                 avatar:"{{Auth::user()->avatar}}"
             }
         @endif
+        window.Laravel = <?php
+        echo json_encode([
+            'csrtToken' => csrf_token()
+        ])
+        ?>
     </script>
     {{--<script src="{{ asset('js/bootstrap.min.js') }}"></script>--}}
 
